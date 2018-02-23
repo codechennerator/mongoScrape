@@ -18,8 +18,7 @@ app.use(express.static("public"));
 //Mongoose connections
 let MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 mongoose.Promsie = Promise;
-mongoose.connect(MONGODB_URI, {
-});
+mongoose.connect(MONGODB_URI, {});
 
 //Routes 
 
