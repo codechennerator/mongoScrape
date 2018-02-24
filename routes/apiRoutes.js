@@ -27,9 +27,17 @@ module.exports = (app) => {
                             }
                         });
                     }
+                }else{
+                    return;
                 }
             });
         });
-        res.send("Scrape Complete");
+        res.send('hello world');
     })
+
+    app.get("/loadLastScraped", (req, res) =>{
+        db.CurrentArticle.find({}, (err, response) =>{
+            res.json(response);
+        })
+    });
 }
