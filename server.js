@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const cheerio = require("cheerio");
 
 //Models
 let db = require("./models");
@@ -21,7 +20,8 @@ mongoose.Promsie = Promise;
 mongoose.connect(MONGODB_URI, {});
 
 //Routes 
-require("./routes/htmlRoutes.js")(app);
+require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app);
 
 //Server
 app.listen(PORT, () =>{
