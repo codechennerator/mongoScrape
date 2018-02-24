@@ -3,9 +3,13 @@ const express = require("express");
 const path    = require("path");
 const cheerio = require("cheerio");
 const request = require("request");
+const mongoose = require("mongoose");
 
 module.exports = (app) => {
     app.get("/scrapeArticles", (req, res) =>{
+        db.CurrentArticle.remove({}, (err, res) => {
+            if (err) throw err;
+        });
         request("https://www.nytimes.com/", (error, response, html) =>{
             const $ = cheerio.load(html);
             $('.story-heading').each((index, element) =>{
