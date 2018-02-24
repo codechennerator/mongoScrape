@@ -62,4 +62,21 @@ module.exports = (app) => {
 
         res.redirect('/savedArticles');
     });
+
+    app.get('/api/savedArticles' ,(req, res) =>{
+        db.Article.find({}, (err, response) =>{
+            res.json(response);
+        })
+    });
+
+    app.delete('/api/delete-article/:id', (req,res) =>{
+        db.Article.findByIdAndRemove(req.params.id, (err, article) =>{
+            if (err) throw err;
+            const response = {
+                message: "Article deleted",
+                id: article._id
+            };
+            res.json(response);
+        })
+    });
 }
