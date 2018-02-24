@@ -1,6 +1,23 @@
 $(document).ready(function(){
     const modalSetup = (e) =>{
-        document.getElementById('saveNote').setAttribute('data-id', e.target.dataset.id);
+        document.getElementById('thisarticle').setAttribute('value', e.target.dataset.id);
+        let url = `/getNotes/${e.target.dataset.id}`;
+        fetch(url, {
+            method: 'get'
+        }).then((response) => {
+            return response.json();
+        }).then((data) =>{
+            console.log(data);
+            let notesWell = document.getElementById('notes-well');
+            let notesData = data[0].notes;
+            for(let i = 0; i< notesData.length; i++){
+                let newNote = document.createElement('li');
+                newNote.innerHTML = notesData[i].note;
+                notesWell.appendChild(newNote);
+            }
+        }).catch((err) => {
+            if(err) throw err;
+        });
     }
 //==============================================================================================================================
     const deleteArticle = (e) =>{

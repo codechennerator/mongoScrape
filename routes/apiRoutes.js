@@ -79,4 +79,36 @@ module.exports = (app) => {
             res.json(response);
         })
     });
+    
+    app.post('/submit-note', (req, res) =>{
+        console.log(req.body);
+        db.Note.create({
+            note: req.body.note
+        })
+        .then(function(dbNote) {
+            return db.Article.findByIdAndUpdate({_id: req.body.thisarticle}, { $push: { notes: dbNote._id } }, { new: true });
+        })
+        .then(function(dbArticle) {
+            // If the User was updated successfully, send it back to the client
+            res.redirect('/savedArticles');
+        })
+        .catch(function(err) {
+            // If an error occurs, send it back to the client
+            res.json(err);
+        });
+    });
+    app.get("/getNotes/:_id", (req, res) => {
+        // Find all users
+        db.Article.find(req.params)
+          // Specify that we want to populate the retrieved users with any associated notes
+          .populate("notes")
+          .then(function(dbArticle) {
+            // If able to successfully find and associate all Users and Notes, send them back to the client
+            res.json(dbArticle);
+          })
+          .catch(function(err) {
+            // If an error occurs, send it back to the client
+            res.json(err);
+          });
+      });
 }
