@@ -20,3 +20,6 @@ main {
 .icon-block .material-icons {
 	font-size: inherit;
 }
+.add-article{
+  cursor: pointer;
+}

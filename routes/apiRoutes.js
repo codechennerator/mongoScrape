@@ -40,4 +40,26 @@ module.exports = (app) => {
             res.json(response);
         })
     });
+    
+    app.post('/saveArticle', (req,res) =>{
+        db.Article.findOne(
+            {title: req.body.title}, (err, article) =>{
+                if(err) throw err;
+                if(article){
+                    console.log('already added!');
+                    return false;
+                }else{
+                    db.Article.create({
+                        title: req.body.title,
+                        link: req.body.link
+                    }), (err, inserted) =>{
+                        if(err) throw err;
+                        // res.json(inserted);
+                    }
+                }
+            }
+        );
+
+        res.redirect('/savedArticles');
+    });
 }
